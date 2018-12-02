@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Popular Subreddits</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="arrow-dropdown"
+        pullingText="Pull to refresh"
+        refreshingSpinner="circles"
+        refreshingText="Refreshing...">
+      </ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item (click)="presentToast()" class="reddit-items" *ngFor="let redditData of redditFeeds">
+        <ion-avatar slot="start">
+            <img *ngIf="redditData.data.icon_img != '' " src="{{redditData.data.icon_img}}">
+            <img *ngIf="redditData.data.icon_img == '' " src="https://external-preview.redd.it/iDdntscPf-nfWKqzHRGFmhVxZm4hZgaKe5oyFws-yzA.png?auto=webp&s=38648ef0dc2c3fce76d5e1d8639234d8da0152b2">
+        </ion-avatar>
+        <ion-label text-wrap>
+          <ion-text color="primary">
+            <h1 class="thread-title">{{redditData.data.title}}</h1>
+          </ion-text>
+          <ion-text>
+            <h2>{{redditData.data.public_description}}</h2>
+          </ion-text>
+          <p>Subscribers: {{redditData.data.subscribers | number}} </p>
+        </ion-label>
+    </ion-item>      
+  </ion-list>
+</ion-content>
